@@ -1,4 +1,3 @@
-import { useState } from "react";
 import CartItem from "./CartItem";
 
 const Cart = (props) => {
@@ -7,6 +6,11 @@ const Cart = (props) => {
     : "close-cart-animation";
 
   console.log(props.cart);
+  const cartTotal = props.cart
+    .map((item) => parseFloat(item.price))
+    .reduce((num, acc) => (num += acc))
+    .toFixed(2);
+  console.log(cartTotal);
   return (
     <div className={`cart ${animationClasses}`}>
       <div className="exit" role="button" onClick={props.toggleCart}>
@@ -32,7 +36,7 @@ const Cart = (props) => {
       <div className="cart-bottom">
         <div className="cart-total">
           <span className="subtotal">SUBTOTAL</span>
-          <div className="cart-price">$ 0.00</div>
+          <div className="cart-price">$ {cartTotal}</div>
         </div>
         <button className="cart-btn">CHECKOUT</button>
       </div>
