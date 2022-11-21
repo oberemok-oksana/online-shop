@@ -16,6 +16,12 @@ const CartItem = (props) => {
         </div>
       </div>
       <div className="cart-item__right">
+        <button
+          className="delete-btn"
+          onClick={() => props.deleteCartItem(props.item.id)}
+        >
+          x
+        </button>
         <span className="cart-item__price">${props.item.price.toFixed(2)}</span>
         <div className="cart-item__buttons">
           <button className="cart-item__btn">-</button>

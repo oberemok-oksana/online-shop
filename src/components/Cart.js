@@ -6,10 +6,11 @@ const Cart = (props) => {
     : "close-cart-animation";
 
   console.log(props.cart);
-  const cartTotal = props.cart
-    .map((item) => parseFloat(item.price))
-    .reduce((num, acc) => (num += acc))
-    .toFixed(2);
+  const cartTotal =
+    props.cart
+      .map((item) => parseFloat(item.price))
+      .reduce((num, acc) => (num += acc))
+      .toFixed(2) || "0.00";
   console.log(cartTotal);
   return (
     <div className={`cart ${animationClasses}`}>
@@ -29,7 +30,11 @@ const Cart = (props) => {
         )}
         <ul className="cart-items">
           {props.cart.map((item) => (
-            <CartItem item={item} key={item.id} />
+            <CartItem
+              item={item}
+              key={item.id}
+              deleteCartItem={props.deleteCartItem}
+            />
           ))}
         </ul>
       </div>

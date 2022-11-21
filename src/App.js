@@ -19,6 +19,10 @@ function App() {
     setIsOpenCart("true");
   };
 
+  const deleteCartItem = (id) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
+  };
+
   return (
     <div className="App">
       <header>
@@ -100,7 +104,12 @@ function App() {
         </main>
       </div>
       {isOpenCart && (
-        <Cart toggleCart={toggleCart} isOpenCart={isOpenCart} cart={cart} />
+        <Cart
+          toggleCart={toggleCart}
+          isOpenCart={isOpenCart}
+          cart={cart}
+          deleteCartItem={deleteCartItem}
+        />
       )}
     </div>
   );
