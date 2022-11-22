@@ -21,7 +21,7 @@ const Cart = (props) => {
         <div className="cart-img-wrapper">
           <div className="cart-logo">
             <img src="/images/cart-icon.png" alt="cart" />
-            <span className="cart-amount">0</span>
+            <span className="cart-amount">{props.cart.length}</span>
           </div>
           <h2>Cart</h2>
         </div>

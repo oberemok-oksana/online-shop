@@ -67,7 +67,7 @@ function App() {
           <div className="cart-wrapper" role="button" onClick={toggleCart}>
             <div className="cart-logo">
               <img src="/images/cart-icon.png" alt="cart" />
-              <span className="cart-amount">0</span>
+              <span className="cart-amount">{cart.length}</span>
             </div>
           </div>
         </nav>
