@@ -15,12 +15,49 @@ function App() {
   };
 
   const addToCart = (item) => {
-    setCart((prev) => [...prev, item]);
+    setCart((prev) => {
+      const alreadyExist = prev.find((el) => el.id === item.id);
+      if (!alreadyExist) {
+        const newItem = { ...item, quantity: 1 };
+        return [...prev, newItem];
+      } else {
+        return [...prev];
+      }
+    });
     setIsOpenCart("true");
   };
+  // console.log(cart);
 
   const deleteCartItem = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  // const reduceItemQuantity = () => {
+  //   setCart((prev) => {
+  //     if (prev > 1) {
+  //       return quantity - 1;
+  //     } else {
+  //       return 1;
+  //     }
+  //   });
+  // };
+
+  const increaseItemQuantity = (id) => {
+    setCart((prev) => {
+      // let newItem = prev.find((el) => {
+      //   return el.id === id;
+      // });
+      // newItem = { ...newItem, quantity: newItem.quantity + 1 };
+
+      const filtered = prev.map((el) => {
+        if (el.id === id) {
+          return { ...el, quantity: el.quantity + 1 };
+        } else {
+          return el;
+        }
+      });
+      return filtered;
+    });
   };
 
   return (
@@ -109,6 +146,7 @@ function App() {
           isOpenCart={isOpenCart}
           cart={cart}
           deleteCartItem={deleteCartItem}
+          increaseItemQuantity={increaseItemQuantity}
         />
       )}
     </div>

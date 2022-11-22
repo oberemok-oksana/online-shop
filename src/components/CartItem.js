@@ -12,7 +12,7 @@ const CartItem = (props) => {
         <div className="cart-item__description">
           <h4 className="cart-item__title">{props.item.title}</h4>
           <div>Size: {props.item.availableSizes[0]}</div>
-          <div>Quantity:1</div>
+          <div>Quantity:{props.item.quantity}</div>
         </div>
       </div>
       <div className="cart-item__right">
@@ -24,8 +24,15 @@ const CartItem = (props) => {
         </button>
         <span className="cart-item__price">${props.item.price.toFixed(2)}</span>
         <div className="cart-item__buttons">
-          <button className="cart-item__btn">-</button>
-          <button className="cart-item__btn">+</button>
+          <button className="cart-item__btn" onClick={props.reduceItemQuantity}>
+            -
+          </button>
+          <button
+            className="cart-item__btn"
+            onClick={() => props.increaseItemQuantity(props.item.id)}
+          >
+            +
+          </button>
         </div>
       </div>
     </li>
