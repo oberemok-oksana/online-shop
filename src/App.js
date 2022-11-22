@@ -26,21 +26,10 @@ function App() {
     });
     setIsOpenCart("true");
   };
-  // console.log(cart);
-
   const deleteCartItem = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // const reduceItemQuantity = () => {
-  //   setCart((prev) => {
-  //     if (prev > 1) {
-  //       return quantity - 1;
-  //     } else {
-  //       return 1;
-  //     }
-  //   });
-  // };
   const reduceItemQuantity = (id) => {
     setCart((prev) => {
       const filtered = prev.map((el) => {
