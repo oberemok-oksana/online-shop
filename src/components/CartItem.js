@@ -24,7 +24,10 @@ const CartItem = (props) => {
         </button>
         <span className="cart-item__price">${props.item.price.toFixed(2)}</span>
         <div className="cart-item__buttons">
-          <button className="cart-item__btn" onClick={props.reduceItemQuantity}>
+          <button
+            className="cart-item__btn"
+            onClick={() => props.reduceItemQuantity(props.item.id)}
+          >
             -
           </button>
           <button

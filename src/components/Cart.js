@@ -33,7 +33,7 @@ const Cart = (props) => {
               item={item}
               key={item.id}
               deleteCartItem={props.deleteCartItem}
-              // reduceItemQuantity={reduceItemQuantity}
+              reduceItemQuantity={props.reduceItemQuantity}
               increaseItemQuantity={props.increaseItemQuantity}
               quantity={item.quantity}
             />

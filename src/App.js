@@ -41,14 +41,25 @@ function App() {
   //     }
   //   });
   // };
+  const reduceItemQuantity = (id) => {
+    setCart((prev) => {
+      const filtered = prev.map((el) => {
+        if (el.id === id) {
+          if (el.quantity > 1) {
+            return { ...el, quantity: el.quantity - 1 };
+          } else {
+            return el;
+          }
+        } else {
+          return el;
+        }
+      });
+      return filtered;
+    });
+  };
 
   const increaseItemQuantity = (id) => {
     setCart((prev) => {
-      // let newItem = prev.find((el) => {
-      //   return el.id === id;
-      // });
-      // newItem = { ...newItem, quantity: newItem.quantity + 1 };
-
       const filtered = prev.map((el) => {
         if (el.id === id) {
           return { ...el, quantity: el.quantity + 1 };
@@ -147,6 +158,7 @@ function App() {
           cart={cart}
           deleteCartItem={deleteCartItem}
           increaseItemQuantity={increaseItemQuantity}
+          reduceItemQuantity={reduceItemQuantity}
         />
       )}
     </div>
