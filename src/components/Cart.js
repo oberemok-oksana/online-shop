@@ -37,6 +37,7 @@ const Cart = (props) => {
               reduceItemQuantity={props.reduceItemQuantity}
               increaseItemQuantity={props.increaseItemQuantity}
               quantity={item.quantity}
+              size={props.size}
             />
           ))}
         </ul>
@@ -46,7 +47,13 @@ const Cart = (props) => {
           <span className="subtotal">SUBTOTAL</span>
           <div className="cart-price">$ {cartTotal}</div>
         </div>
-        <button className="cart-btn">CHECKOUT</button>
+        <button
+          disabled={!props.cart.length}
+          className="cart-btn"
+          onClick={props.toggleModal}
+        >
+          CHECKOUT
+        </button>
       </div>
     </div>
   );

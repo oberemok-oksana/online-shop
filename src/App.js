@@ -4,11 +4,24 @@ import { getItems } from "./api/index.js";
 import "./App.css";
 import Card from "./components/Card.js";
 import Cart from "./components/Cart.js";
+import Modal from "./components/Modal.js";
+import Confetti from "react-confetti";
 
 function App() {
   const { data, isLoading } = useQuery(["cards"], getItems);
   const [isOpenCart, setIsOpenCart] = useState(false);
   const [cart, setCart] = useState([]);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [size, setSize] = useState([]);
+
+  const toggleSuccess = () => {
+    setSuccess(true);
+  };
+
+  const toggleModal = () => {
+    setIsOpenModal((prev) => !prev);
+  };
 
   const toggleCart = () => {
     setIsOpenCart((prevState) => !prevState);
@@ -60,6 +73,42 @@ function App() {
     });
   };
 
+  const resetCart = () => {
+    setCart([]);
+    setIsOpenModal(false);
+  };
+
+  const changeSize = (size) => {
+    setSize((prev) => {
+      if (prev.includes(size)) {
+        return prev.filter((el) => el !== size);
+      } else {
+        return [...prev, size];
+      }
+    });
+  };
+
+  const filterBySize = () => {
+    if (!data) {
+      return data;
+    }
+    if (!size.length) {
+      return data;
+    }
+    const filtered = data.filter((el) => {
+      for (let i of el.availableSizes) {
+        if (size.includes(i)) {
+          return el;
+        }
+      }
+    });
+
+    return filtered;
+  };
+
+  const filteredData = filterBySize();
+  console.log(filteredData);
+
   return (
     <div className="App">
       <header>
@@ -80,43 +129,78 @@ function App() {
             <div className="sizes">
               <div className="size">
                 <label htmlFor="xs">
-                  <input type="checkbox" name="xs" id="xs" />
-                  <span className="checkmark"> XS</span>
+                  <input
+                    type="checkbox"
+                    name="xs"
+                    id="xs"
+                    onChange={() => changeSize("XS")}
+                  />
+                  <span className="checkmark">XS</span>
                 </label>
               </div>
               <div className="size">
                 <label htmlFor="s">
-                  <input type="checkbox" name="s" id="s" />
+                  <input
+                    type="checkbox"
+                    name="s"
+                    id="s"
+                    onChange={() => changeSize("S")}
+                  />
                   <span className="checkmark">S</span>
                 </label>
               </div>
               <div className="size">
                 <label htmlFor="m">
-                  <input type="checkbox" name="m" id="m" />
+                  <input
+                    type="checkbox"
+                    name="m"
+                    id="m"
+                    onChange={() => changeSize("M")}
+                  />
                   <span className="checkmark">M</span>
                 </label>
               </div>
               <div className="size">
                 <label htmlFor="ml">
-                  <input type="checkbox" name="ml" id="ml" />
+                  <input
+                    type="checkbox"
+                    name="ml"
+                    id="ml"
+                    onChange={() => changeSize("ML")}
+                  />
                   <span className="checkmark">ML</span>
                 </label>
               </div>
               <div className="size">
                 <label htmlFor="l">
-                  <input type="checkbox" name="l" id="l" />
+                  <input
+                    type="checkbox"
+                    name="l"
+                    id="l"
+                    onChange={() => changeSize("L")}
+                  />
                   <span className="checkmark">L</span>
                 </label>
               </div>
               <div className="size">
                 <label htmlFor="xl">
-                  <input type="checkbox" name="xl" id="xl" />
-                  <span className="checkmark">Xl</span>
+                  <input
+                    type="checkbox"
+                    name="xl"
+                    id="xl"
+                    onChange={() => changeSize("XL")}
+                  />
+                  <span className="checkmark">XL</span>
                 </label>
               </div>
               <div className="size">
                 <label htmlFor="xxl">
-                  <input type="checkbox" name="xxl" id="xxl" />
+                  <input
+                    type="checkbox"
+                    name="xxl"
+                    id="xxl"
+                    onChange={() => changeSize("XXL")}
+                  />
                   <span className="checkmark">XXL</span>
                 </label>
               </div>
@@ -125,7 +209,7 @@ function App() {
           <div className="cards">
             {isLoading && <p>Loading...</p>}
             {!isLoading &&
-              data.map((item) => (
+              filteredData.map((item) => (
                 <Card
                   item={item}
                   title={item.title}
@@ -148,8 +232,19 @@ function App() {
           deleteCartItem={deleteCartItem}
           increaseItemQuantity={increaseItemQuantity}
           reduceItemQuantity={reduceItemQuantity}
+          toggleModal={toggleModal}
+          size={size}
         />
       )}
+      {isOpenModal && (
+        <Modal
+          resetCart={resetCart}
+          toggleSuccess={toggleSuccess}
+          toggleCart={toggleCart}
+          toggleModal={toggleModal}
+        />
+      )}
+      {success && <Confetti />}
     </div>
   );
 }
